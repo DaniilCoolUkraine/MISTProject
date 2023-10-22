@@ -7,10 +7,15 @@ namespace MistProject.Utils
 {
     public class LocationUtils : MonoBehaviour
     {
-        public event Action<LocationInfo> OnLocationGetSuccess;
         public event Action<LocationErrors> OnLocationGetError;
+
+        public void GetLocation(Action<LocationInfo> callback)
+        {
+            StopAllCoroutines();
+            StartCoroutine(GetLocationCoroutine(callback));
+        }
         
-        public IEnumerator GetLocation()
+        private IEnumerator GetLocationCoroutine(Action<LocationInfo> callback)
         {
             if (RequestPermissions()) yield break;
 
@@ -29,7 +34,7 @@ namespace MistProject.Utils
             }
             else
             {
-                OnLocationGetSuccess?.Invoke(location.lastData);
+                callback?.Invoke(location.lastData);
             }
             
             location.Stop();

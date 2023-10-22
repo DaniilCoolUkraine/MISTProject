@@ -1,6 +1,8 @@
-﻿using MistProject.General;
+﻿using System;
+using MistProject.General;
 using MistProject.Requests;
 using MistProject.Requests.Response;
+using MistProject.Utils;
 using UnityEngine;
 using Zenject;
 
@@ -12,6 +14,7 @@ namespace MistProject.UI
                                                   $"key={Constants.API_KEY}";
 
         private RequestHolder _requestHolder;
+        private LocationUtils _locationUtils;
         
         private void Awake()
         {
@@ -19,9 +22,29 @@ namespace MistProject.UI
         }
 
         [Inject]
-        public void InjectDependencies(RequestHolder requestHolder)
+        public void InjectDependencies(RequestHolder requestHolder, LocationUtils locationUtils)
         {
             _requestHolder = requestHolder;
+            _locationUtils = locationUtils;
+
+            _locationUtils.OnLocationGetError += LocationGetError;
+            
+            _locationUtils.GetLocation(LocationGetSuccess);
+        }
+
+        private void LocationGetSuccess(LocationInfo location)
+        {
+            _locationUtils.OnLocationGetError -= LocationGetError;
+            
+            Debug.Log($"{location.latitude}, {location.longitude}");
+            
+            throw new NotImplementedException("Location success isn`t implemented");
+        }
+
+        private void LocationGetError(LocationErrors locationErrors)
+        {
+            _locationUtils.OnLocationGetError -= LocationGetError;
+            throw new NotImplementedException("Location error isn`t implemented");
         }
         
         private void ResponseActions(IResponseData responseData)
