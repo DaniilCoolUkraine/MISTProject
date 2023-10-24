@@ -2,6 +2,7 @@
 using System.Collections;
 using MistProject.General;
 using UnityEngine;
+using UnityEngine.Android;
 
 namespace MistProject.Utils
 {
@@ -14,53 +15,42 @@ namespace MistProject.Utils
             StopAllCoroutines();
             StartCoroutine(GetLocationCoroutine(callback));
         }
-        
+
         private IEnumerator GetLocationCoroutine(Action<LocationInfo> callback)
         {
-            if (RequestPermissions()) yield break;
+            if (!Input.location.isEnabledByUser)
+            {
+                Debug.Log("gps isn't enabled");
+                Permission.RequestUserPermission(Permission.FineLocation);
+            }
 
-            LocationService location = Input.location;
-            location.Start(Constants.LOCATION_ACCURACY, Constants.LOCATION_UPDATE);
-            
-            yield return new WaitForSeconds(Constants.WAIT_BEFORE_TIMEOUT);
+            Input.location.Start(Constants.LOCATION_ACCURACY, Constants.LOCATION_UPDATE);
 
-            if (location.status == LocationServiceStatus.Initializing)
+            float maxWait = Constants.WAIT_BEFORE_TIMEOUT;
+
+            while (Input.location.status == LocationServiceStatus.Initializing && maxWait > 0)
+            {
+                yield return new WaitForSeconds(1);
+                maxWait--;
+                Debug.Log(
+                    $"Waiting for {maxWait} from {Constants.WAIT_BEFORE_TIMEOUT} with status {Input.location.status}");
+            }
+
+            if (maxWait <= 0)
             {
                 OnLocationGetError?.Invoke(LocationErrors.TimeOut);
             }
-            else if (location.status != LocationServiceStatus.Running)
+
+            if (Input.location.status == LocationServiceStatus.Failed)
             {
                 OnLocationGetError?.Invoke(LocationErrors.UnableToDetermineLocation);
             }
             else
             {
-                callback?.Invoke(location.lastData);
+                callback?.Invoke(Input.location.lastData);
             }
-            
-            location.Stop();
-        }
 
-        private bool RequestPermissions()
-        {
-#if UNITY_ANDROID
-            if (!UnityEngine.Android.Permission.HasUserAuthorizedPermission(UnityEngine.Android.Permission.CoarseLocation))
-            {
-                UnityEngine.Android.Permission.RequestUserPermission(UnityEngine.Android.Permission.CoarseLocation);
-
-                if (!Input.location.isEnabledByUser)
-                {
-                    OnLocationGetError?.Invoke(LocationErrors.PermissionNotGranted);
-                    return true;
-                }
-            }
-#elif UNITY_IOS
-            if (!Input.location.isEnabledByUser)
-            {
-                OnLocationGetError?.Invoke(LocationErrors.PermissionNotGranted);
-                return true;
-            }
-#endif
-            return false;
+            Input.location.Stop();
         }
     }
 }

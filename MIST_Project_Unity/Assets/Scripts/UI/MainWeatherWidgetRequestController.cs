@@ -1,5 +1,4 @@
-﻿using System;
-using MistProject.General;
+﻿using MistProject.General;
 using MistProject.Requests;
 using MistProject.Requests.Response;
 using MistProject.Utils;
@@ -10,12 +9,13 @@ namespace MistProject.UI
 {
     public class MainWeatherWidgetRequestController : MonoBehaviour
     {
-        private static readonly string API_LINK = Constants.GLOBAL_API_LINK + "current.json?" + "q=46.476608%2C30.707310" + "&" +
+        private static readonly string API_LINK = Constants.GLOBAL_API_LINK + "current.json?" +
+                                                  "q=46.476608%2C30.707310" + "&" +
                                                   $"key={Constants.API_KEY}";
 
         private RequestHolder _requestHolder;
         private LocationUtils _locationUtils;
-        
+
         private void Awake()
         {
             _requestHolder.SendGetRequest(API_LINK, null, ResponseActions);
@@ -28,25 +28,31 @@ namespace MistProject.UI
             _locationUtils = locationUtils;
 
             _locationUtils.OnLocationGetError += LocationGetError;
-            
-            _locationUtils.GetLocation(LocationGetSuccess);
+            _locationUtils.GetLocation(LocationGetSuccessCallback);
         }
 
-        private void LocationGetSuccess(LocationInfo location)
+        private void LocationGetSuccessCallback(LocationInfo location)
         {
             _locationUtils.OnLocationGetError -= LocationGetError;
-            
             Debug.Log($"{location.latitude}, {location.longitude}");
-            
-            throw new NotImplementedException("Location success isn`t implemented");
         }
 
         private void LocationGetError(LocationErrors locationErrors)
         {
             _locationUtils.OnLocationGetError -= LocationGetError;
-            throw new NotImplementedException("Location error isn`t implemented");
+
+            if (locationErrors == LocationErrors.TimeOut)
+            {
+                Debug.Log("TimeOut");
+            }
+            else if (locationErrors == LocationErrors.UnableToDetermineLocation)
+            {
+                Debug.Log("UnableToDetermineLocation");
+            }
+
+            // todo add multiple requests
         }
-        
+
         private void ResponseActions(IResponseData responseData)
         {
             Debug.Log(responseData.GetText());
