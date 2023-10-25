@@ -1760,6 +1760,7 @@ GameObject:
   - component: {fileID: 923688174}
   - component: {fileID: 923688173}
   - component: {fileID: 923688172}
+  - component: {fileID: 923688175}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1849,6 +1850,20 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &923688175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 923688170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 612913299c6f4ddfbc1b5b857a346228, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mainWeatherWidgetController: {fileID: 1611056529}
+  _mainWeatherRequest: {fileID: 1611056528}
 --- !u!1 &1064568523
 GameObject:
   m_ObjectHideFlags: 0
@@ -2737,6 +2752,7 @@ GameObject:
   - component: {fileID: 1611056526}
   - component: {fileID: 1611056527}
   - component: {fileID: 1611056528}
+  - component: {fileID: 1611056529}
   m_Layer: 5
   m_Name: Header
   m_TagString: Untagged
@@ -2797,6 +2813,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3d9128ae08f420cbb52f4da42ecb2d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1611056529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1611056525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e21966f7e31494fb1d9c6e21c0dc261, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cityCountry: {fileID: 862625291}
+  _temperature: {fileID: 895993426}
+  _unitsOfMeasurement: {fileID: 909240599}
+  _generalDescription: {fileID: 329363047}
+  _weatherTypeIcon: {fileID: 1115422594}
 --- !u!1 &1655754546
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,6 +13,7 @@ namespace MistProject.UI
     public class MainWeatherWidgetRequestController : MonoBehaviour
     {
         public event Action<MainWeatherData> OnRequestSuccess;
+        public event Action<Sprite> OnImageLoaded; 
         public event Action OnRequestFailed;
 
         private string _emptyApiLink = Constants.GLOBAL_API_LINK + "current.json?" + "q=&" + $"key={Constants.API_KEY}";

@@ -13,5 +13,7 @@
         public const float LOCATION_UPDATE = 500;
 
         public const float WAIT_BEFORE_TIMEOUT = 15;
+
+        public const char DEGREES = '°';
     }
 }
