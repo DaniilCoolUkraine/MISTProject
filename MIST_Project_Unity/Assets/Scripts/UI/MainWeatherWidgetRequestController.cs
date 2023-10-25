@@ -23,6 +23,9 @@ namespace MistProject.UI
 
         private int _currentLocationRequestAttempt = 0;
 
+        private SpriteHolder _spriteHolder;
+        private TextureHolder _textureHolder;
+
         [Inject]
         public void InjectDependencies(RequestHolder requestHolder, LocationUtils locationUtils)
         {
@@ -30,6 +33,12 @@ namespace MistProject.UI
             _locationUtils = locationUtils;
 
             RequestLocation();
+        }
+
+        private void OnDisable()
+        {
+            _spriteHolder?.Dispose();
+            _textureHolder?.Dispose();
         }
 
         private void RequestLocation()
@@ -52,7 +61,7 @@ namespace MistProject.UI
 
             Debug.Log($"<color=green>Sending to {filledApiLink}</color>");
 
-            _requestHolder.SendGetRequest(filledApiLink, null, ResponseActions);
+            _requestHolder.SendGetRequest(filledApiLink, null, RequestType.Json, ResponseActions);
         }
 
         private void LocationGetError(LocationErrors locationErrors)
@@ -87,6 +96,7 @@ namespace MistProject.UI
                     }
 
                     OnRequestSuccess?.Invoke(mainWeatherData);
+                    RequestImage(mainWeatherData.current.condition.icon);
                 }
                 catch (Exception e)
                 {
@@ -97,6 +107,33 @@ namespace MistProject.UI
             else
             {
                 Debug.LogError(responseData.GetText());
+                OnRequestFailed?.Invoke();
+            }
+        }
+
+        private void RequestImage(string link)
+        {
+            _requestHolder.SendGetRequest(link, null, RequestType.Image, ImageResponseActions);
+        }
+
+        private void ImageResponseActions(IResponseData responseData)
+        {
+            if (responseData is ImageResponseData imageResponseData)
+            {
+                _spriteHolder?.Dispose();
+                _textureHolder?.Dispose();
+                
+                _spriteHolder = new SpriteHolder();
+                _textureHolder = imageResponseData.Texture;
+                
+                Sprite loadedSprite = Sprite.Create(_textureHolder.Texture, new Rect(0,0,Constants.LOADED_IMAGE_SIZE,Constants.LOADED_IMAGE_SIZE), new Vector2(0.5f, 0.5f));
+                _spriteHolder.SetSprite(loadedSprite);
+                
+                OnImageLoaded?.Invoke(loadedSprite);
+            }
+            else
+            {
+                Debug.LogError(responseData.GetType() + " " + responseData.GetText());
                 OnRequestFailed?.Invoke();
             }
         }

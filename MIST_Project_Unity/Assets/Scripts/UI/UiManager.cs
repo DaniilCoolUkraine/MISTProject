@@ -10,11 +10,13 @@ namespace MistProject.UI
         private void OnEnable()
         {
             _mainWeatherRequest.OnRequestSuccess += _mainWeatherWidgetController.SetTexts;
+            _mainWeatherRequest.OnImageLoaded += _mainWeatherWidgetController.SetWeatherIcon;
         }
 
         private void OnDisable()
         {
             _mainWeatherRequest.OnRequestSuccess -= _mainWeatherWidgetController.SetTexts;
+            _mainWeatherRequest.OnImageLoaded -= _mainWeatherWidgetController.SetWeatherIcon;
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 using MistProject.Requests.Post;
 using MistProject.Requests.Response;
 using UnityEngine;
@@ -14,7 +13,8 @@ namespace MistProject.Requests
     {
         private Dictionary<string, Coroutine> _activeRequests;
 
-        public void SendGetRequest(string url, [CanBeNull] IPostData postData, Action<IResponseData> callback)
+        public void SendGetRequest(string url, IPostData? postData, RequestType requestType,
+            Action<IResponseData> callback)
         {
             if (_activeRequests == null)
                 _activeRequests = new Dictionary<string, Coroutine>();
@@ -23,10 +23,18 @@ namespace MistProject.Requests
                 StopCoroutine(request);
 
             _activeRequests[url] = StartCoroutine(GetRequestCoroutine(url, postData, callback));
+
+            if (requestType == RequestType.Json)
+            {
+                _activeRequests[url] = StartCoroutine(GetRequestCoroutine(url, postData, callback));
+            }
+            else if (requestType == RequestType.Image)
+            {
+                _activeRequests[url] = StartCoroutine(ImageGetRequestCoroutine(url, postData, callback));
+            }
         }
 
-        private IEnumerator GetRequestCoroutine(string url, [CanBeNull] IPostData postData,
-            Action<IResponseData> callback)
+        private IEnumerator GetRequestCoroutine(string url, IPostData? postData, Action<IResponseData> callback)
         {
             UnityWebRequest getRequest = UnityWebRequest.Get(url);
             getRequest.uploadHandler = new UploadHandlerRaw(postData?.RawData);
@@ -47,6 +55,34 @@ namespace MistProject.Requests
             }
 
             responseData.ResponseCode = getRequest.responseCode;
+
+            callback?.Invoke(responseData);
+            _activeRequests.Remove(url);
+        }
+
+        private IEnumerator ImageGetRequestCoroutine(string url, IPostData? postData, Action<IResponseData> callback)
+        {
+            UnityWebRequest getRequest = UnityWebRequestTexture.GetTexture(url);
+            getRequest.uploadHandler = new UploadHandlerRaw(postData?.RawData);
+
+            yield return getRequest.SendWebRequest();
+
+            IResponseData responseData;
+
+            if (getRequest.result == UnityWebRequest.Result.Success)
+            {
+                var textureResponse = new ImageResponseData();
+
+                textureResponse.Texture = new TextureHolder();
+                textureResponse.Texture.SetTexture(((DownloadHandlerTexture) getRequest.downloadHandler).texture);
+
+                responseData = textureResponse;
+            }
+            else
+            {
+                responseData = new ErrorResponseData();
+                responseData.Data = getRequest.error.ToByte();
+            }
 
             callback?.Invoke(responseData);
             _activeRequests.Remove(url);

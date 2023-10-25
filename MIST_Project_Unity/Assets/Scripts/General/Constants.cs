@@ -15,5 +15,7 @@
         public const float WAIT_BEFORE_TIMEOUT = 15;
 
         public const char DEGREES = '°';
+
+        public const int LOADED_IMAGE_SIZE = 64;
     }
 }

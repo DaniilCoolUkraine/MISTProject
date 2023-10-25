@@ -35,6 +35,7 @@ namespace MistProject.UI
         public void SetWeatherIcon(Sprite weatherIcon)
         {
             _weatherTypeIcon.sprite = weatherIcon;
+            _weatherTypeIcon.color = Color.white;
         }
     }
 }
