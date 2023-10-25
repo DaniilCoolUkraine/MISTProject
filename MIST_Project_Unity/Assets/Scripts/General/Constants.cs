@@ -7,6 +7,8 @@
         public const string GLOBAL_API_LINK = "https://api.weatherapi.com/v1/";
         public const string COMMA_CODE = "%2C";
 
+        public const int MAX_REQUEST_ATTEMPTS_COUNT = 3;
+
         public const float LOCATION_ACCURACY = 500;
         public const float LOCATION_UPDATE = 500;
 

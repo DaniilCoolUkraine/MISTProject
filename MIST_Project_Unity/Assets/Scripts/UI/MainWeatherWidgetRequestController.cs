@@ -1,8 +1,10 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using MistProject.General;
 using MistProject.Requests;
 using MistProject.Requests.Response;
 using MistProject.Utils;
+using Newtonsoft.Json;
 using UnityEngine;
 using Zenject;
 
@@ -10,10 +12,15 @@ namespace MistProject.UI
 {
     public class MainWeatherWidgetRequestController : MonoBehaviour
     {
+        public event Action<MainWeatherData> OnRequestSuccess;
+        public event Action OnRequestFailed;
+
         private string _emptyApiLink = Constants.GLOBAL_API_LINK + "current.json?" + "q=&" + $"key={Constants.API_KEY}";
 
         private RequestHolder _requestHolder;
         private LocationUtils _locationUtils;
+
+        private int _currentLocationRequestAttempt = 0;
 
         [Inject]
         public void InjectDependencies(RequestHolder requestHolder, LocationUtils locationUtils)
@@ -21,8 +28,18 @@ namespace MistProject.UI
             _requestHolder = requestHolder;
             _locationUtils = locationUtils;
 
-            _locationUtils.OnLocationGetError += LocationGetError;
-            _locationUtils.GetLocation(LocationGetSuccessCallback);
+            RequestLocation();
+        }
+
+        private void RequestLocation()
+        {
+            if (_currentLocationRequestAttempt < Constants.MAX_REQUEST_ATTEMPTS_COUNT)
+            {
+                Debug.LogWarning($"Location attempt {_currentLocationRequestAttempt}");
+                _locationUtils.OnLocationGetError += LocationGetError;
+                _locationUtils.GetLocation(LocationGetSuccessCallback);
+                _currentLocationRequestAttempt++;
+            }
         }
 
         private void LocationGetSuccessCallback(LocationInfo location)
@@ -50,12 +67,37 @@ namespace MistProject.UI
                 Debug.Log("UnableToDetermineLocation");
             }
 
-            // todo add multiple requests
+            RequestLocation();
         }
 
         private void ResponseActions(IResponseData responseData)
         {
-            Debug.Log(responseData.GetText());
+            if (responseData is SuccessResponseData)
+            {
+                try
+                {
+                    Debug.Log(responseData.GetText());
+                    MainWeatherData mainWeatherData =
+                        JsonConvert.DeserializeObject<MainWeatherData>(responseData.GetText());
+
+                    if (mainWeatherData == null || mainWeatherData.current == null || mainWeatherData.location == null)
+                    {
+                        throw new NullReferenceException("Some values are null");
+                    }
+
+                    OnRequestSuccess?.Invoke(mainWeatherData);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError(e.Message);
+                    OnRequestFailed?.Invoke();
+                }
+            }
+            else
+            {
+                Debug.LogError(responseData.GetText());
+                OnRequestFailed?.Invoke();
+            }
         }
     }
 }
