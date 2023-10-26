@@ -1,4 +1,4 @@
-﻿namespace MistProject.Utils
+﻿namespace MistProject.Utils.Location
 {
     public enum LocationErrors
     {

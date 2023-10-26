@@ -1,4 +1,4 @@
-﻿using MistProject.Utils;
+﻿using MistProject.Utils.Location;
 using Zenject;
 
 namespace MistProject.MonoInstallers

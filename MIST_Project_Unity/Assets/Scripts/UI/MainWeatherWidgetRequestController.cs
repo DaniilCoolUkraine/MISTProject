@@ -3,7 +3,7 @@ using System.Globalization;
 using MistProject.General;
 using MistProject.Requests;
 using MistProject.Requests.Response;
-using MistProject.Utils;
+using MistProject.Utils.Location;
 using Newtonsoft.Json;
 using UnityEngine;
 using Zenject;

@@ -4,7 +4,7 @@ using MistProject.General;
 using UnityEngine;
 using UnityEngine.Android;
 
-namespace MistProject.Utils
+namespace MistProject.Utils.Location
 {
     public class LocationUtils : MonoBehaviour
     {
