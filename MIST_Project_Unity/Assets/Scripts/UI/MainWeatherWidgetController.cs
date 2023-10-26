@@ -2,6 +2,7 @@
 using System.Text;
 using MistProject.Config;
 using MistProject.General;
+using MistProject.Utils.Context;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -47,12 +48,19 @@ namespace MistProject.UI
             sb.Clear();
             _generalDescription.text = sb.Append(weatherData.current.condition.text).Append(" with ")
                 .Append(weatherData.current.humidity).Append("% humidity").ToString();
+
+            SaveToContext(weatherData);
         }
 
         public void SetWeatherIcon(Sprite weatherIcon)
         {
             _weatherTypeIcon.sprite = weatherIcon;
             _weatherTypeIcon.color = Color.white;
+        }
+
+        private void SaveToContext(MainWeatherData weatherData)
+        {
+            ContextManager.Instance.BindContext<WeatherDataContext>(new WeatherDataContext(weatherData));
         }
     }
 }
