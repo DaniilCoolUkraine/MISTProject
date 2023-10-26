@@ -15,6 +15,8 @@
         public const float WAIT_BEFORE_TIMEOUT = 15;
 
         public const char DEGREES = '°';
+        public const string CELSIUS = "Celsius";
+        public const string FAHRENHEITS = "Fahrenheit";
 
         public const int LOADED_IMAGE_SIZE = 64;
     }
