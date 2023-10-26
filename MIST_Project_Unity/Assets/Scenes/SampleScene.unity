@@ -402,7 +402,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Sunny with 73% humidity
+  m_text: ...
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c65997088d0e5db4f8dcc96e02e90211, type: 2}
   m_sharedMaterial: {fileID: 2582307056933225448, guid: c65997088d0e5db4f8dcc96e02e90211, type: 2}
@@ -2597,7 +2597,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89715ad69b973a14899afa2c6730b30b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scriptableObjectInstallers: []
+  _scriptableObjectInstallers:
+  - {fileID: 11400000, guid: 9e126569882215a4194c920e86051c91, type: 2}
   _monoInstallers:
   - {fileID: 2105517694}
   - {fileID: 171367887}
@@ -2615,7 +2616,7 @@ MonoBehaviour:
   OnPostResolve:
     m_PersistentCalls:
       m_Calls: []
-  _parentNewObjectsUnderSceneContext: 0
+  _parentNewObjectsUnderSceneContext: 1
   _contractNames: []
   _parentContractNames: []
 --- !u!1 &1534126896
