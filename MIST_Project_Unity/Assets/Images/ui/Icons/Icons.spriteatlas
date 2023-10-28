@@ -20,7 +20,19 @@ SpriteAtlas:
       readable: 0
       crunchedCompression: 0
       sRGB: 1
-    platformSettings: []
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
     packingSettings:
       serializedVersion: 2
       padding: 4
@@ -43,12 +55,18 @@ SpriteAtlas:
   - {fileID: 430715528, guid: 66e49526d323bc146b025ce79a74faea, type: 3}
   - {fileID: 1198652820, guid: 66e49526d323bc146b025ce79a74faea, type: 3}
   - {fileID: -740468407, guid: 66e49526d323bc146b025ce79a74faea, type: 3}
+  - {fileID: 21300000, guid: fd798d68a083d3349a5fedd087e96813, type: 3}
+  - {fileID: 21300000, guid: f32a8b2e897b9a9479985f973adf6a3a, type: 3}
+  - {fileID: 21300000, guid: 01090f3f9450640409654ce18158e005, type: 3}
   m_PackedSpriteNamesToIndex:
   - location
   - Snow
   - Rain
   - Sun
   - Cloudy
+  - thermometer
+  - barometer
+  - wind
   m_RenderDataMap: {}
   m_Tag: Icons
   m_IsVariant: 0
