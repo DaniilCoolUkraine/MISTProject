@@ -2,6 +2,7 @@
 using System.Text;
 using MistProject.Config;
 using MistProject.General;
+using MistProject.UI.JsonData;
 using MistProject.Utils.Context;
 using TMPro;
 using UnityEngine;
@@ -27,7 +28,7 @@ namespace MistProject.UI
             _globalSettings = globalSettings;
         }
 
-        public void SetTexts(MainWeatherData weatherData)
+        public void SetTexts(WeatherData weatherData)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -58,7 +59,7 @@ namespace MistProject.UI
             _weatherTypeIcon.color = Color.white;
         }
 
-        private void SaveToContext(MainWeatherData weatherData)
+        private void SaveToContext(WeatherData weatherData)
         {
             ContextManager.Instance.BindContext<WeatherDataContext>(new WeatherDataContext(weatherData));
         }

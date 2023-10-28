@@ -1,12 +1,13 @@
 ﻿using MistProject.UI;
+using MistProject.UI.JsonData;
 
 namespace MistProject.Utils.Context
 {
     public class WeatherDataContext : ContextBase
     {
-        public MainWeatherData WeatherData { get; private set; }
+        public WeatherData WeatherData { get; private set; }
         
-        public WeatherDataContext(MainWeatherData weatherData)
+        public WeatherDataContext(WeatherData weatherData)
         {
             WeatherData = weatherData;
         }

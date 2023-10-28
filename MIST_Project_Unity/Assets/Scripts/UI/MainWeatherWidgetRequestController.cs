@@ -3,6 +3,7 @@ using System.Globalization;
 using MistProject.General;
 using MistProject.Requests;
 using MistProject.Requests.Response;
+using MistProject.UI.JsonData;
 using MistProject.Utils.Location;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -12,7 +13,7 @@ namespace MistProject.UI
 {
     public class MainWeatherWidgetRequestController : MonoBehaviour
     {
-        public event Action<MainWeatherData> OnRequestSuccess;
+        public event Action<WeatherData> OnRequestSuccess;
         public event Action<Sprite> OnImageLoaded; 
         public event Action OnRequestFailed;
 
@@ -87,8 +88,8 @@ namespace MistProject.UI
                 try
                 {
                     Debug.Log(responseData.GetText());
-                    MainWeatherData mainWeatherData =
-                        JsonConvert.DeserializeObject<MainWeatherData>(responseData.GetText());
+                    WeatherData mainWeatherData =
+                        JsonConvert.DeserializeObject<WeatherData>(responseData.GetText());
 
                     if (mainWeatherData == null || mainWeatherData.current == null || mainWeatherData.location == null)
                     {
