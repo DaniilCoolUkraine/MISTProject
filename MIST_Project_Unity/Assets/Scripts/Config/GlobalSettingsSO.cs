@@ -6,5 +6,6 @@ namespace MistProject.Config
     public class GlobalSettingsSO : ScriptableObject
     {
         [field:SerializeField] public bool UseCelsius { get; private set; }
+        [field:SerializeField] public bool UseMetricSystem { get; private set; }
     }
 }

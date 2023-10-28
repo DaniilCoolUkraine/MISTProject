@@ -17,6 +17,13 @@
         public const char DEGREES = '°';
         public const string CELSIUS = "Celsius";
         public const string FAHRENHEITS = "Fahrenheit";
+        public const char CELSIUS_SHORT = 'C';
+        public const char FAHRENHEITS_SHORT = 'F';
+
+        public const string KILOMETERS_HOUR = "km/h";
+        public const string MILES_HOUR = "m/h";
+
+        public const string MILLIBAR = "mb";
 
         public const int LOADED_IMAGE_SIZE = 64;
     }

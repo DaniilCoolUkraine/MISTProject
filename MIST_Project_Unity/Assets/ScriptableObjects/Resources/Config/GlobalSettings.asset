@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: GlobalSettings
   m_EditorClassIdentifier: 
   <UseCelsius>k__BackingField: 1
+  <UseMetricSystem>k__BackingField: 1
