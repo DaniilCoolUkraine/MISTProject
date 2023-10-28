@@ -4455,6 +4455,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mainWeatherWidgetController: {fileID: 1611056529}
   _mainWeatherRequest: {fileID: 1611056528}
+  _additionalWeatherInfoController: {fileID: 1468144575}
 --- !u!1 &931507716
 GameObject:
   m_ObjectHideFlags: 0
