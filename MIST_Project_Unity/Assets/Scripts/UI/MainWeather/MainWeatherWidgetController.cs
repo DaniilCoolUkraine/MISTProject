@@ -49,19 +49,12 @@ namespace MistProject.UI.MainWeather
             sb.Clear();
             _generalDescription.text = sb.Append(weatherData.current.condition.text).Append(" with ")
                 .Append(weatherData.current.humidity).Append("% humidity").ToString();
-
-            SaveToContext(weatherData);
         }
 
         public void SetWeatherIcon(Sprite weatherIcon)
         {
             _weatherTypeIcon.sprite = weatherIcon;
             _weatherTypeIcon.color = Color.white;
-        }
-
-        private void SaveToContext(WeatherData weatherData)
-        {
-            ContextManager.Instance.BindContext<WeatherDataContext>(new WeatherDataContext(weatherData));
         }
     }
 }

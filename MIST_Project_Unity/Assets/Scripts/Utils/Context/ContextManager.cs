@@ -38,10 +38,13 @@ namespace MistProject.Utils.Context
         public bool TryGetContext<T>(out T context) where T : ContextBase
         {
             context = null;
-            if (_contextBindings.TryGetValue(typeof(T), out var getContext))
+            if (_contextBindings != null)
             {
-                context = (T) getContext;
-                return true;
+                if (_contextBindings.TryGetValue(typeof(T), out var getContext))
+                {
+                    context = (T) getContext;
+                    return true;
+                }
             }
 
             return false;
