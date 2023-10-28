@@ -5,6 +5,8 @@ namespace MistProject.Utils.Context
 {
     public class ContextManager
     {
+        public event Action OnContextUpdated; 
+
         private static ContextManager _instance;
         
         public static ContextManager Instance
@@ -29,6 +31,8 @@ namespace MistProject.Utils.Context
                 _contextBindings = new Dictionary<Type, ContextBase>();
             }
             _contextBindings[typeof(T)] = context;
+            
+            OnContextUpdated?.Invoke();
         }
 
         public bool TryGetContext<T>(out T context) where T : ContextBase
