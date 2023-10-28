@@ -5,7 +5,7 @@ using MistProject.Utils.Context;
 using UnityEngine;
 using Zenject;
 
-namespace MistProject.UI
+namespace MistProject.UI.MainWeather
 {
     public class AdditionalWeatherInfoController : MonoBehaviour
     {

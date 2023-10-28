@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 using UnityEngine;
 using Zenject;
 
-namespace MistProject.UI
+namespace MistProject.UI.MainWeather
 {
     public class MainWeatherWidgetRequestController : MonoBehaviour
     {

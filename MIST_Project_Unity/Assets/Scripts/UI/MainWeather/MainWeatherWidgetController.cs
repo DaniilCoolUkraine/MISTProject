@@ -9,7 +9,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-namespace MistProject.UI
+namespace MistProject.UI.MainWeather
 {
     public class MainWeatherWidgetController : MonoBehaviour
     {
