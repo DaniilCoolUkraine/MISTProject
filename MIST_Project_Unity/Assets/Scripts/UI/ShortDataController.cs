@@ -14,5 +14,11 @@ namespace MistProject.UI
         {
             _value.text = value;
         }
+
+        public void FillElement(string name, string value)
+        {
+            _name.text = name;
+            _value.text = value;
+        }
     }
 }
