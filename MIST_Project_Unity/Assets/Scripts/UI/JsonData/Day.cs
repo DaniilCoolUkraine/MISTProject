@@ -17,12 +17,12 @@
         public float totalprecip_mm { get; set; }
         public float totalprecip_in { get; set; }
 
-        public int totalsnow_cm { get; set; }
+        public float totalsnow_cm { get; set; }
 
-        public int avgvis_km { get; set; }
-        public int avgvis_miles { get; set; }
+        public float avgvis_km { get; set; }
+        public float avgvis_miles { get; set; }
 
-        public int avghumidity { get; set; }
+        public float avghumidity { get; set; }
 
         public int daily_will_it_rain { get; set; }
         public int daily_chance_of_rain { get; set; }
@@ -31,6 +31,6 @@
         public int daily_chance_of_snow { get; set; }
 
         public Condition condition { get; set; }
-        public int uv { get; set; }
+        public float uv { get; set; }
     }
 }
