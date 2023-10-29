@@ -56,7 +56,7 @@ namespace MistProject.UI.MainWeather
             {
                 try
                 {
-                    Debug.Log(responseData.GetText());
+                    Debug.Log($"<color=#46ABF2>Current weather</color> {responseData.GetText()}");
                     WeatherData mainWeatherData =
                         JsonConvert.DeserializeObject<WeatherData>(responseData.GetText());
 

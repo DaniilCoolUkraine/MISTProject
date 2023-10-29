@@ -17,7 +17,7 @@ namespace MistProject.UI.Forecast
         public event Action OnServerRequestFailed;
 
         private string _emptyApiLink =
-            Constants.GLOBAL_API_LINK + "current.json?" + "q=&" + $"days=3&key={Constants.API_KEY}";
+            Constants.GLOBAL_API_LINK + "forecast.json?" + "q=&" + $"days=3&key={Constants.API_KEY}";
         
         private RequestHolder _requestHolder;
         
@@ -50,7 +50,7 @@ namespace MistProject.UI.Forecast
             {
                 try
                 {
-                    Debug.Log(responseData.GetText());
+                    Debug.Log($"<color=#46ABF2>Forecast</color> {responseData.GetText()}");
                     ForecastData data =
                         JsonConvert.DeserializeObject<ForecastData>(responseData.GetText());
 
