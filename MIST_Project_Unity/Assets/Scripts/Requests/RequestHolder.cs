@@ -21,9 +21,7 @@ namespace MistProject.Requests
 
             if (_activeRequests.TryGetValue(url, out var request))
                 StopCoroutine(request);
-
-            _activeRequests[url] = StartCoroutine(GetRequestCoroutine(url, postData, callback));
-
+            
             if (requestType == RequestType.Json)
             {
                 _activeRequests[url] = StartCoroutine(GetRequestCoroutine(url, postData, callback));
