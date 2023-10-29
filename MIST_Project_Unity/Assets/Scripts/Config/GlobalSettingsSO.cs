@@ -7,5 +7,6 @@ namespace MistProject.Config
     {
         [field:SerializeField] public bool UseCelsius { get; private set; }
         [field:SerializeField] public bool UseMetricSystem { get; private set; }
+        [field:SerializeField] public bool UseTwelveHoursSystem { get; private set; }
     }
 }

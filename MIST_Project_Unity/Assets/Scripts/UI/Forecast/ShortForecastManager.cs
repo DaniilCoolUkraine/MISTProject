@@ -31,11 +31,6 @@ namespace MistProject.UI.Forecast
                 var keyTime = _keyTimes[i];
                 var element = _shortForecastElements[i];
 
-                Debug.Log(keyTime);
-                
-                DateTime dateTime = DateTime.ParseExact(keyTime, "HH:mm", System.Globalization.CultureInfo.InvariantCulture);
-                string shortTime = dateTime.ToString("h tt", System.Globalization.CultureInfo.InvariantCulture);
-                
                 foreach (var hour in currentDayHours)
                 {
                     var time = hour.time.Split(" ")[1];
@@ -54,7 +49,9 @@ namespace MistProject.UI.Forecast
                                 .Append(Constants.FAHRENHEITS_SHORT);
                         }
 
-                        element.FillElement(shortTime, temperature.ToString());
+                        element.FillElement(
+                            _globalSettings.UseTwelveHoursSystem ? keyTime.ToTwelveHoursFormat() : keyTime,
+                            temperature.ToString());
                     }
                 }
             }
