@@ -8,15 +8,16 @@ namespace MistProject.Utils.Location
 {
     public class LocationUtils : MonoBehaviour
     {
+        public event Action<LocationInfo> OnLocationGetSuccess;
         public event Action<LocationErrors> OnLocationGetError;
 
-        public void GetLocation(Action<LocationInfo> callback)
+        private void Start()
         {
             StopAllCoroutines();
-            StartCoroutine(GetLocationCoroutine(callback));
+            StartCoroutine(GetLocationCoroutine());
         }
 
-        private IEnumerator GetLocationCoroutine(Action<LocationInfo> callback)
+        private IEnumerator GetLocationCoroutine()
         {
             if (!Input.location.isEnabledByUser)
             {
@@ -47,7 +48,7 @@ namespace MistProject.Utils.Location
             }
             else
             {
-                callback?.Invoke(Input.location.lastData);
+                OnLocationGetSuccess?.Invoke(Input.location.lastData);
             }
 
             Input.location.Stop();

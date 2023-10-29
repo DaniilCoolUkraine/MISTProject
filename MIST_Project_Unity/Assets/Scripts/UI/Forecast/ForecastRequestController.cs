@@ -28,7 +28,6 @@ namespace MistProject.UI.Forecast
         public void InjectDependencies(RequestHolder requestHolder)
         {
             _requestHolder = requestHolder;
-            RequestLocation();
         }
         
         protected override void LocationGetSuccessCallback(LocationInfo location)

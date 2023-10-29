@@ -1,6 +1,4 @@
 ﻿using System;
-using MistProject.General;
-using MistProject.Utils.Context;
 using MistProject.Utils.Location;
 using UnityEngine;
 using Zenject;
@@ -19,27 +17,19 @@ namespace MistProject.UI
         public void InjectDependencies(LocationUtils locationUtils)
         {
             LocationUtils = locationUtils;
+            
+            LocationUtils.OnLocationGetError += LocationGetError;
+            LocationUtils.OnLocationGetSuccess += LocationGetSuccessCallback;
         }
-        
-        protected void RequestLocation()
-        {
-            if (ContextManager.Instance.TryGetContext<LocationContext>(out var location))
-            {
-                LocationGetSuccessCallback(location.LocationInfo);
-                return;
-            }
 
-            if (_currentLocationRequestAttempt < Constants.MAX_REQUEST_ATTEMPTS_COUNT)
-            {
-                Debug.LogWarning($"Location attempt {_currentLocationRequestAttempt}");
-                LocationUtils.OnLocationGetError += LocationGetError;
-                LocationUtils.GetLocation(LocationGetSuccessCallback);
-                _currentLocationRequestAttempt++;
-            }
+        private void OnDisable()
+        {
+            LocationUtils.OnLocationGetError -= LocationGetError;
+            LocationUtils.OnLocationGetSuccess -= LocationGetSuccessCallback;
         }
-        
+
         protected abstract void LocationGetSuccessCallback(LocationInfo location);
-        
+
         protected void LocationGetError(LocationErrors locationErrors)
         {
             LocationUtils.OnLocationGetError -= LocationGetError;
@@ -52,8 +42,6 @@ namespace MistProject.UI
             {
                 Debug.Log("UnableToDetermineLocation");
             }
-
-            RequestLocation();
         }
     }
 }

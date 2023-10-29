@@ -28,7 +28,6 @@ namespace MistProject.UI.MainWeather
         public void InjectDependencies(RequestHolder requestHolder)
         {
             _requestHolder = requestHolder;
-            RequestLocation();
         }
 
         private void OnDisable()
