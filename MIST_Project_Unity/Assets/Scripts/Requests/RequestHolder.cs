@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using MistProject.Requests.Post;
 using MistProject.Requests.Response;
 using UnityEngine;
@@ -11,24 +10,16 @@ namespace MistProject.Requests
 {
     public class RequestHolder : MonoBehaviour
     {
-        private Dictionary<string, Coroutine> _activeRequests;
-
         public void SendGetRequest(string url, IPostData? postData, RequestType requestType,
             Action<IResponseData> callback)
         {
-            if (_activeRequests == null)
-                _activeRequests = new Dictionary<string, Coroutine>();
-
-            if (_activeRequests.TryGetValue(url, out var request))
-                StopCoroutine(request);
-            
             if (requestType == RequestType.Json)
             {
-                _activeRequests[url] = StartCoroutine(GetRequestCoroutine(url, postData, callback));
+                StartCoroutine(GetRequestCoroutine(url, postData, callback));
             }
             else if (requestType == RequestType.Image)
             {
-                _activeRequests[url] = StartCoroutine(ImageGetRequestCoroutine(url, postData, callback));
+                StartCoroutine(ImageGetRequestCoroutine(url, postData, callback));
             }
         }
 
@@ -55,7 +46,6 @@ namespace MistProject.Requests
             responseData.ResponseCode = getRequest.responseCode;
 
             callback?.Invoke(responseData);
-            _activeRequests.Remove(url);
         }
 
         private IEnumerator ImageGetRequestCoroutine(string url, IPostData? postData, Action<IResponseData> callback)
@@ -83,7 +73,6 @@ namespace MistProject.Requests
             }
 
             callback?.Invoke(responseData);
-            _activeRequests.Remove(url);
         }
     }
 }
