@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MistProject.Config;
@@ -11,7 +12,7 @@ namespace MistProject.UI.Forecast
 {
     public class ShortForecastManager : MonoBehaviour
     {
-        public event Action<string> OnLinkFound; 
+        public event Action<List<string>> OnLinksFound; 
 
         [SerializeField] private ShortDataController[] _shortForecastElements;
         [SerializeField] private string[] _keyTimes;
@@ -26,8 +27,12 @@ namespace MistProject.UI.Forecast
 
         public void UpdateValues(ForecastData forecastData)
         {
+            List<string> iconsUrl = new List<string>(_shortForecastElements.Length);
+            
             var currentDayHours = forecastData.forecast.forecastday.Select(day => day.hour).ToList()[0];
 
+            int j = 0;
+            
             for (int i = 0; i < _keyTimes.Length; i++)
             {
                 var keyTime = _keyTimes[i];
@@ -54,14 +59,17 @@ namespace MistProject.UI.Forecast
                         element.FillElement(
                             _globalSettings.UseTwelveHoursSystem ? keyTime.ToTwelveHoursFormat() : keyTime,
                             temperature.ToString());
-                        
-                        OnLinkFound?.Invoke(hour.condition.icon);
+
+                        iconsUrl.Add(hour.condition.icon);
                     }
                 }
             }
+            
+            Debug.Log($"Links extracted: {iconsUrl.Count}");
+            OnLinksFound?.Invoke(iconsUrl);
         }
 
-        public void UpdateIcons(SpriteHolder[] icons)
+        public void UpdateIcons(IEnumerable<SpriteHolder> icons)
         {
             var iconsElements = icons.Zip(_shortForecastElements, (s, c) => new {Sprite = s, Element = c});
 

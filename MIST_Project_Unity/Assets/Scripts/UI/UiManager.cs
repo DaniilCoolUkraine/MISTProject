@@ -17,7 +17,10 @@ namespace MistProject.UI
         {
             _mainWeatherRequest.OnRequestSuccess += _mainWeatherWidgetController.SetTexts;
             _mainWeatherRequest.OnImageLoaded += _mainWeatherWidgetController.SetWeatherIcon;
+            
             _forecastRequestController.OnRequestSuccess += _shortForecastManager.UpdateValues;
+            _shortForecastManager.OnLinksFound += _forecastRequestController.RequestIcons;
+            _forecastRequestController.OnIconsLoaded += _shortForecastManager.UpdateIcons;
 
             ContextManager.Instance.OnContextUpdated += _additionalWeatherInfoController.UpdateValues;
         }
@@ -26,7 +29,10 @@ namespace MistProject.UI
         {
             _mainWeatherRequest.OnRequestSuccess -= _mainWeatherWidgetController.SetTexts;
             _mainWeatherRequest.OnImageLoaded -= _mainWeatherWidgetController.SetWeatherIcon;
+            
             _forecastRequestController.OnRequestSuccess -= _shortForecastManager.UpdateValues;
+            _shortForecastManager.OnLinksFound -= _forecastRequestController.RequestIcons;
+            _forecastRequestController.OnIconsLoaded -= _shortForecastManager.UpdateIcons;
 
             ContextManager.Instance.OnContextUpdated -= _additionalWeatherInfoController.UpdateValues;
         }

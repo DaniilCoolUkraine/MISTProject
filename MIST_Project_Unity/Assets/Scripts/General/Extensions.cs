@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using MistProject.Requests.Response;
 
 namespace MistProject.General
@@ -19,6 +20,11 @@ namespace MistProject.General
         {
             DateTime dateTime = DateTime.ParseExact(twentyFourHours, "HH:mm", System.Globalization.CultureInfo.InvariantCulture);
             return dateTime.ToString("h tt", System.Globalization.CultureInfo.InvariantCulture);
+        }
+        
+        public static bool ListIsEmptyOrNull<T>(this List<T> list)
+        {
+            return list == null && list.Count == 0;
         }
     }
 }

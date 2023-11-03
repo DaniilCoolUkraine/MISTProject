@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using MistProject.General;
 using MistProject.Requests;
@@ -16,6 +17,8 @@ namespace MistProject.UI.Forecast
         public event Action<ForecastData> OnRequestSuccess;
         public event Action OnServerRequestFailed;
 
+        public event Action<List<SpriteHolder>> OnIconsLoaded;
+
         private string _emptyApiLink =
             Constants.GLOBAL_API_LINK + "forecast.json?" + "q=&" + $"days=3&key={Constants.API_KEY}";
         
@@ -23,6 +26,10 @@ namespace MistProject.UI.Forecast
         
         private SpriteHolder _spriteHolder;
         private TextureHolder _textureHolder;
+
+        private List<SpriteHolder> _loadedIcons;
+        private int _maxIcons;
+        private int _currentIcon = 0;
 
         [Inject]
         public void InjectDependencies(RequestHolder requestHolder)
@@ -60,8 +67,6 @@ namespace MistProject.UI.Forecast
 
                     OnRequestSuccess?.Invoke(data);
                     ContextManager.Instance.BindContext<ForecastContext>(new ForecastContext(data));
-
-                    // RequestImage(mainWeatherData.current.condition.icon);
                 }
                 catch (Exception e)
                 {
@@ -73,6 +78,49 @@ namespace MistProject.UI.Forecast
             {
                 Debug.LogError(responseData.GetText());
                 OnServerRequestFailed?.Invoke();
+            }
+        }
+
+        public void RequestIcons(List<string> iconsUrls)
+        {
+            if (!iconsUrls.ListIsEmptyOrNull())
+            {
+                _loadedIcons?.ForEach(s => s.Dispose());
+                
+                _maxIcons = iconsUrls.Count;
+                _loadedIcons = new List<SpriteHolder>(_maxIcons);
+
+                foreach (string url in iconsUrls)
+                {
+                    Debug.Log($"<color=green>Sending to {url}</color>");
+                    _requestHolder.SendGetRequest(url, null, RequestType.Image, OnImageLoaded);
+                }
+            }
+        }
+
+        private void OnImageLoaded(IResponseData responseData)
+        {
+            if (responseData is ImageResponseData imageResponseData)
+            {
+                Debug.Log($"<color=#46ABF2>Loaded icons {_currentIcon + 1}/{_maxIcons}</color>");
+                
+                var tempSprite = new SpriteHolder();
+                var tempTexture = imageResponseData.Texture;
+                
+                Sprite loadedSprite = Sprite.Create(tempTexture.Texture, new Rect(0,0,Constants.LOADED_IMAGE_SIZE,Constants.LOADED_IMAGE_SIZE), new Vector2(0.5f, 0.5f));
+                tempSprite.SetSprite(loadedSprite);
+                
+                _loadedIcons.Add(tempSprite);
+                _currentIcon++;
+
+                if (_loadedIcons.Count == _maxIcons)
+                {
+                    OnIconsLoaded?.Invoke(_loadedIcons);
+                }
+            }
+            else
+            {
+                Debug.LogError($"Cannot load icon({responseData.GetType()}): {responseData.GetText()}");
             }
         }
     }
