@@ -11,6 +11,8 @@ namespace MistProject.UI.Forecast
 {
     public class ShortForecastManager : MonoBehaviour
     {
+        public event Action<string> OnLinkFound; 
+
         [SerializeField] private ShortDataController[] _shortForecastElements;
         [SerializeField] private string[] _keyTimes;
 
@@ -52,8 +54,20 @@ namespace MistProject.UI.Forecast
                         element.FillElement(
                             _globalSettings.UseTwelveHoursSystem ? keyTime.ToTwelveHoursFormat() : keyTime,
                             temperature.ToString());
+                        
+                        OnLinkFound?.Invoke(hour.condition.icon);
                     }
                 }
+            }
+        }
+
+        public void UpdateIcons(SpriteHolder[] icons)
+        {
+            var iconsElements = icons.Zip(_shortForecastElements, (s, c) => new {Sprite = s, Element = c});
+
+            foreach (var iconElement in iconsElements)
+            {
+                iconElement.Element.SetIcon(iconElement.Sprite.Sprite);
             }
         }
     }

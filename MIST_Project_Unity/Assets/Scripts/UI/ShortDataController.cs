@@ -20,5 +20,10 @@ namespace MistProject.UI
             _name.text = name;
             _value.text = value;
         }
+
+        public void SetIcon(Sprite sprite)
+        {
+            _icon.sprite = sprite;
+        }
     }
 }
