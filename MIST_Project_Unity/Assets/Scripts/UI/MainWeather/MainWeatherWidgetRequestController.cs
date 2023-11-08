@@ -30,7 +30,7 @@ namespace MistProject.UI.MainWeather
             _requestHolder = requestHolder;
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
             _spriteHolder?.Dispose();
             _textureHolder?.Dispose();
