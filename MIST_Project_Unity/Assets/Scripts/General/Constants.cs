@@ -26,5 +26,7 @@
         public const string MILLIBAR = "mb";
 
         public const int LOADED_IMAGE_SIZE = 64;
+
+        public const float ANIMATIONS_DURATION = 2;
     }
 }

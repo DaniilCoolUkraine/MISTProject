@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <UseCelsius>k__BackingField: 1
   <UseMetricSystem>k__BackingField: 1
+  <UseTwelveHoursSystem>k__BackingField: 0
+  <EnableAnimations>k__BackingField: 1

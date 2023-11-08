@@ -1,11 +1,22 @@
 ﻿using System.Collections.Generic;
+using MistProject.Config;
+using MistProject.General;
 using UnityEngine;
+using Zenject;
 
 namespace MistProject.UI.Screen
 {
     public class ScreenManager : MonoBehaviour
     {
         private List<ScreenBase> _screens;
+
+        private GlobalSettingsSO _globalSettings;
+
+        [Inject]
+        public void InjectDependencies(GlobalSettingsSO globalSettings)
+        {
+            _globalSettings = globalSettings;
+        }
 
         public void AddScreen(ScreenBase screen)
         {
@@ -19,9 +30,12 @@ namespace MistProject.UI.Screen
 
         public void SwitchScreens(ScreenBase gotoScreen, bool doFade = true)
         {
-            foreach (var screen in _screens)
+            if (_globalSettings.EnableAnimations)
             {
-                screen.SwitchScreen(screen == gotoScreen);
+                foreach (var screen in _screens)
+                {
+                    screen.SwitchScreen(screen == gotoScreen, Constants.ANIMATIONS_DURATION);
+                }
             }
         }
     }
