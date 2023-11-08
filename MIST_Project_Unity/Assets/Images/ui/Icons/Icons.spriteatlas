@@ -50,21 +50,27 @@ SpriteAtlas:
     cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
+  - {fileID: 21300000, guid: dab3ba0402fd4094889d0a008b2392ee, type: 3}
   - {fileID: 21300000, guid: dabde924b940c12479e2a1b5f5d3434a, type: 3}
   - {fileID: 354782333, guid: 66e49526d323bc146b025ce79a74faea, type: 3}
   - {fileID: 430715528, guid: 66e49526d323bc146b025ce79a74faea, type: 3}
   - {fileID: 1198652820, guid: 66e49526d323bc146b025ce79a74faea, type: 3}
   - {fileID: -740468407, guid: 66e49526d323bc146b025ce79a74faea, type: 3}
+  - {fileID: 21300000, guid: 00450c97cea75064983aa5ba66792c10, type: 3}
   - {fileID: 21300000, guid: fd798d68a083d3349a5fedd087e96813, type: 3}
+  - {fileID: 21300000, guid: 9a84349dbb4e47049a81350f90ae015b, type: 3}
   - {fileID: 21300000, guid: f32a8b2e897b9a9479985f973adf6a3a, type: 3}
   - {fileID: 21300000, guid: 01090f3f9450640409654ce18158e005, type: 3}
   m_PackedSpriteNamesToIndex:
+  - home
   - location
   - Snow
   - Rain
   - Sun
   - Cloudy
+  - forecast
   - thermometer
+  - settings
   - barometer
   - wind
   m_RenderDataMap: {}
