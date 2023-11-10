@@ -57,10 +57,14 @@ SpriteAtlas:
   - {fileID: 1198652820, guid: 66e49526d323bc146b025ce79a74faea, type: 3}
   - {fileID: -740468407, guid: 66e49526d323bc146b025ce79a74faea, type: 3}
   - {fileID: 21300000, guid: 00450c97cea75064983aa5ba66792c10, type: 3}
+  - {fileID: 21300000, guid: 4ae38db7cf4c02341a6186755563d14f, type: 3}
   - {fileID: 21300000, guid: fd798d68a083d3349a5fedd087e96813, type: 3}
+  - {fileID: 21300000, guid: b819f2cb921f16c4bb035d29d44224f0, type: 3}
   - {fileID: 21300000, guid: 9a84349dbb4e47049a81350f90ae015b, type: 3}
   - {fileID: 21300000, guid: f32a8b2e897b9a9479985f973adf6a3a, type: 3}
   - {fileID: 21300000, guid: 01090f3f9450640409654ce18158e005, type: 3}
+  - {fileID: 21300000, guid: 77198f9f97658054aaa9bee2bacf797e, type: 3}
+  - {fileID: 21300000, guid: e3e75bdfd27711f4fba3bd70c0c500b4, type: 3}
   m_PackedSpriteNamesToIndex:
   - home
   - location
@@ -69,10 +73,14 @@ SpriteAtlas:
   - Sun
   - Cloudy
   - forecast
+  - animate
   - thermometer
+  - 12-hours
   - settings
   - barometer
   - wind
+  - checkmark
+  - meter
   m_RenderDataMap: {}
   m_Tag: Icons
   m_IsVariant: 0
