@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace MistProject.Config
@@ -12,7 +14,8 @@ namespace MistProject.Config
         [SerializeField] private bool _useMetricSystem;
         [SerializeField] private bool _useTwelveHoursSystem;
         [SerializeField] private bool _enableAnimations;
-
+        
+        [JsonIgnore]
         public bool UseCelsius
         {
             get => _useCelsius;
@@ -23,6 +26,7 @@ namespace MistProject.Config
             }
         }
 
+        [JsonIgnore]
         public bool UseMetricSystem
         {
             get => _useMetricSystem;
@@ -33,6 +37,7 @@ namespace MistProject.Config
             }
         }
 
+        [JsonIgnore]
         public bool UseTwelveHoursSystem
         {
             get => _useTwelveHoursSystem;
@@ -43,6 +48,7 @@ namespace MistProject.Config
             }
         }
 
+        [JsonIgnore]
         public bool EnableAnimations
         {
             get => _enableAnimations;
@@ -51,6 +57,24 @@ namespace MistProject.Config
                 _enableAnimations = value;
                 OnSettingsUpdated?.Invoke();
             }
+        }
+
+        public void LoadSettings(string path)
+        {
+            Debug.Log("<color=green>Loading settings</color>");
+            if (File.Exists(path))
+            {
+                string json = File.ReadAllText(path);
+                Debug.Log(json);
+            }
+        }
+
+        public void SaveSettings(string path)
+        {
+            Debug.Log($"Saving settings to {path}");
+            
+            string json = JsonConvert.SerializeObject(this);
+            File.WriteAllText(path, json);
         }
     }
 }
