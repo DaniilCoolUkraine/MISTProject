@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de4aff8045d746348bf80fb56456dcbe, type: 3}
   m_Name: GlobalSettings
   m_EditorClassIdentifier: 
-  <UseCelsius>k__BackingField: 1
-  <UseMetricSystem>k__BackingField: 1
-  <UseTwelveHoursSystem>k__BackingField: 0
-  <EnableAnimations>k__BackingField: 1
+  _useCelsius: 1
+  _useMetricSystem: 1
+  _useTwelveHoursSystem: 0
+  _enableAnimations: 1

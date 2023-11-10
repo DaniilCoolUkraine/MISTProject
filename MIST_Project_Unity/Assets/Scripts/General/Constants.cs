@@ -27,6 +27,6 @@
 
         public const int LOADED_IMAGE_SIZE = 64;
 
-        public const float ANIMATIONS_DURATION = 2;
+        public const float ANIMATIONS_DURATION = 1;
     }
 }
