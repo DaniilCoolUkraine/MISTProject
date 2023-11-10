@@ -19,14 +19,19 @@ namespace MistProject.UI.Forecast
 
         private GlobalSettingsSO _globalSettings;
 
+        private ForecastData _currentForecastData;
+
         [Inject]
         public void InjectDependencies(GlobalSettingsSO globalSettings)
         {
             _globalSettings = globalSettings;
+            _globalSettings.OnSettingsUpdated += () => UpdateValues(_currentForecastData);
         }
 
         public void UpdateValues(ForecastData forecastData)
         {
+            _currentForecastData = forecastData;
+            
             List<string> iconsUrl = new List<string>(_shortForecastElements.Length);
             
             var currentDayHours = forecastData.forecast.forecastday.Select(day => day.hour).ToList()[0];

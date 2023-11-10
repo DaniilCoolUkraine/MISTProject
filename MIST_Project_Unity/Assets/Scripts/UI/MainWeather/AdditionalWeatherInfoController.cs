@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using MistProject.Config;
 using MistProject.General;
 using MistProject.Utils.Context;
@@ -20,6 +21,12 @@ namespace MistProject.UI.MainWeather
         public void InjectDependencies(GlobalSettingsSO globalSettings)
         {
             _globalSettings = globalSettings;
+            _globalSettings.OnSettingsUpdated += UpdateValues;
+        }
+
+        private void OnDestroy()
+        {
+            _globalSettings.OnSettingsUpdated -= UpdateValues;
         }
 
         public void UpdateValues()

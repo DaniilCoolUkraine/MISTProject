@@ -16,32 +16,41 @@ namespace MistProject.UI.MainWeather
         [SerializeField] private TextMeshProUGUI _temperature;
         [SerializeField] private TextMeshProUGUI _unitsOfMeasurement;
         [SerializeField] private TextMeshProUGUI _generalDescription;
-        
+
         [SerializeField] private Image _weatherTypeIcon;
 
         private GlobalSettingsSO _globalSettings;
+
+        private WeatherData _currentWeatherData;
 
         [Inject]
         public void InjectDependencies(GlobalSettingsSO globalSettings)
         {
             _globalSettings = globalSettings;
+            _globalSettings.OnSettingsUpdated += () => SetTexts(_currentWeatherData);
         }
 
         public void SetTexts(WeatherData weatherData)
         {
+            _currentWeatherData = weatherData;
             StringBuilder sb = new StringBuilder();
 
-            _cityCountry.text = sb.Append(weatherData.location.name).Append(", ").Append(weatherData.location.country).ToString();
+            _cityCountry.text = sb.Append(weatherData.location.name).Append(", ").Append(weatherData.location.country)
+                .ToString();
             sb.Clear();
 
             if (_globalSettings.UseCelsius)
             {
-                _temperature.text = sb.Append(weatherData.current.temp_c.ToString(CultureInfo.CreateSpecificCulture("en-GB"))).Append(Constants.DEGREES).ToString();
+                _temperature.text =
+                    sb.Append(weatherData.current.temp_c.ToString(CultureInfo.CreateSpecificCulture("en-GB")))
+                        .Append(Constants.DEGREES).ToString();
                 _unitsOfMeasurement.text = Constants.CELSIUS;
             }
             else
             {
-                _temperature.text = sb.Append(weatherData.current.temp_f.ToString(CultureInfo.CreateSpecificCulture("en-GB"))).Append(Constants.DEGREES).ToString();
+                _temperature.text =
+                    sb.Append(weatherData.current.temp_f.ToString(CultureInfo.CreateSpecificCulture("en-GB")))
+                        .Append(Constants.DEGREES).ToString();
                 _unitsOfMeasurement.text = Constants.FAHRENHEITS;
             }
 

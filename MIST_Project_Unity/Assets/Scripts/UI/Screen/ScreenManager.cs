@@ -32,15 +32,19 @@ namespace MistProject.UI.Screen
 
         public void SwitchScreens(ScreenBase gotoScreen, bool doFade = true)
         {
+            float switchDuration = 0;
+
             if (_globalSettings.EnableAnimations)
             {
-                foreach (var screen in _screens)
-                {
-                    screen.SwitchScreen(screen == gotoScreen, Constants.ANIMATIONS_DURATION);
-                }
-
-                _mainScrollbar.SetScrollContent(gotoScreen.transform);
+                switchDuration = Constants.ANIMATIONS_DURATION;
             }
+
+            foreach (var screen in _screens)
+            {
+                screen.SwitchScreen(screen == gotoScreen, switchDuration);
+            }
+
+            _mainScrollbar.SetScrollContent(gotoScreen.transform);
         }
     }
 }
