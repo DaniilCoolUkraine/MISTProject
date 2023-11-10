@@ -11,11 +11,13 @@ namespace MistProject.UI.Screen
         private List<ScreenBase> _screens;
 
         private GlobalSettingsSO _globalSettings;
+        private MainScrollbar _mainScrollbar;
 
         [Inject]
-        public void InjectDependencies(GlobalSettingsSO globalSettings)
+        public void InjectDependencies(GlobalSettingsSO globalSettings, MainScrollbar mainScrollbar)
         {
             _globalSettings = globalSettings;
+            _mainScrollbar = mainScrollbar;
         }
 
         public void AddScreen(ScreenBase screen)
@@ -36,6 +38,8 @@ namespace MistProject.UI.Screen
                 {
                     screen.SwitchScreen(screen == gotoScreen, Constants.ANIMATIONS_DURATION);
                 }
+
+                _mainScrollbar.SetScrollContent(gotoScreen.transform);
             }
         }
     }
