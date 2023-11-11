@@ -16,20 +16,23 @@ namespace MistProject.UI.Settings
 
         private string _path;
 
-        private void Awake()
-        {
-            _path = Application.persistentDataPath + "settings.json";
-            _globalSettings.LoadSettings(_path);
-        }
-
         private void OnEnable()
         {
             SetToggleInfo(_useCelsius, _globalSettings.UseCelsius);
             SetToggleInfo(_useMetricSystem, _globalSettings.UseMetricSystem);
             SetToggleInfo(_useTwelveHoursSystem, _globalSettings.UseTwelveHoursSystem);
             SetToggleInfo(_enableAnimations, _globalSettings.EnableAnimations);
+            
+            _path = Application.persistentDataPath + "/settings.json";
+            _globalSettings.LoadSettings(_path);
         }
 
+        // [RuntimeInitializeOnLoadMethod]
+        // private void LoadSettings()
+        // {
+        //     
+        // }
+        
         private void OnDestroy()
         {
             _globalSettings.SaveSettings(_path);

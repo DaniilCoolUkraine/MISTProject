@@ -15,7 +15,6 @@ namespace MistProject.Config
         [SerializeField] private bool _useTwelveHoursSystem;
         [SerializeField] private bool _enableAnimations;
         
-        [JsonIgnore]
         public bool UseCelsius
         {
             get => _useCelsius;
@@ -26,7 +25,6 @@ namespace MistProject.Config
             }
         }
 
-        [JsonIgnore]
         public bool UseMetricSystem
         {
             get => _useMetricSystem;
@@ -37,7 +35,6 @@ namespace MistProject.Config
             }
         }
 
-        [JsonIgnore]
         public bool UseTwelveHoursSystem
         {
             get => _useTwelveHoursSystem;
@@ -48,7 +45,6 @@ namespace MistProject.Config
             }
         }
 
-        [JsonIgnore]
         public bool EnableAnimations
         {
             get => _enableAnimations;
@@ -65,15 +61,33 @@ namespace MistProject.Config
             if (File.Exists(path))
             {
                 string json = File.ReadAllText(path);
-                Debug.Log(json);
+                SettingsStorage storage = JsonConvert.DeserializeObject<SettingsStorage>(json);
+
+                UseCelsius = storage.useCelsius;
+                UseMetricSystem = storage.useMetricSystem;
+                UseTwelveHoursSystem = storage.useTwelveHoursSystem;
+                EnableAnimations = storage.enableAnimations;
+
+                Debug.Log($"<color=green>Loaded settings: {json}</color>");
+            }
+            else
+            {
+                Debug.LogError("Couldn't find file!");
             }
         }
 
         public void SaveSettings(string path)
         {
             Debug.Log($"Saving settings to {path}");
-            
-            string json = JsonConvert.SerializeObject(this);
+
+            SettingsStorage storage = new SettingsStorage();
+
+            storage.useCelsius = UseCelsius;
+            storage.useMetricSystem = UseMetricSystem;
+            storage.useTwelveHoursSystem = UseTwelveHoursSystem;
+            storage.enableAnimations = EnableAnimations;
+
+            string json = JsonConvert.SerializeObject(storage);
             File.WriteAllText(path, json);
         }
     }
