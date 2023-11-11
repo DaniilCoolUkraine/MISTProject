@@ -32,6 +32,12 @@ namespace MistProject.UI.MainWeather
 
         public void SetTexts(WeatherData weatherData)
         {
+            if (weatherData == null)
+            {
+                Debug.LogWarning("Trying to set null");
+                return;
+            }
+            
             _currentWeatherData = weatherData;
             StringBuilder sb = new StringBuilder();
 

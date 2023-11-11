@@ -30,6 +30,12 @@ namespace MistProject.UI.Forecast
 
         public void UpdateValues(ForecastData forecastData)
         {
+            if (forecastData == null) 
+            {
+                Debug.LogWarning("Trying to set null");
+                return;
+            }
+            
             _currentForecastData = forecastData;
             
             List<string> iconsUrl = new List<string>(_shortForecastElements.Length);
