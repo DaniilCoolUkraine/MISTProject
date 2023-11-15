@@ -1,6 +1,5 @@
 ﻿using System;
-using System.IO;
-using Newtonsoft.Json;
+using MistProject.General;
 using UnityEngine;
 
 namespace MistProject.Config
@@ -55,40 +54,27 @@ namespace MistProject.Config
             }
         }
 
-        public void LoadSettings(string path)
+        public void LoadSettings()
         {
-            Debug.Log("<color=green>Loading settings</color>");
-            if (File.Exists(path))
-            {
-                string json = File.ReadAllText(path);
-                SettingsStorage storage = JsonConvert.DeserializeObject<SettingsStorage>(json);
+            if (PlayerPrefs.HasKey(Constants.USE_CELSIUS_KEY))
+                UseCelsius = Convert.ToBoolean(PlayerPrefs.GetString(Constants.USE_CELSIUS_KEY));
 
-                UseCelsius = storage.useCelsius;
-                UseMetricSystem = storage.useMetricSystem;
-                UseTwelveHoursSystem = storage.useTwelveHoursSystem;
-                EnableAnimations = storage.enableAnimations;
+            if (PlayerPrefs.HasKey(Constants.USE_METRIC_SYSTEM_KEY))
+                UseMetricSystem = Convert.ToBoolean(PlayerPrefs.GetString(Constants.USE_METRIC_SYSTEM_KEY));
 
-                Debug.Log($"<color=green>Loaded settings: {json}</color>");
-            }
-            else
-            {
-                Debug.LogError("Couldn't find file!");
-            }
+            if (PlayerPrefs.HasKey(Constants.USE_TWELVE_HOURS_KEY))
+                UseTwelveHoursSystem = Convert.ToBoolean(PlayerPrefs.GetString(Constants.USE_TWELVE_HOURS_KEY));
+
+            if (PlayerPrefs.HasKey(Constants.ENABLE_ANIMATIONS_KEY))
+                EnableAnimations = Convert.ToBoolean(PlayerPrefs.GetString(Constants.ENABLE_ANIMATIONS_KEY));
         }
 
-        public void SaveSettings(string path)
+        public void SaveSettings()
         {
-            Debug.Log($"Saving settings to {path}");
-
-            SettingsStorage storage = new SettingsStorage();
-
-            storage.useCelsius = UseCelsius;
-            storage.useMetricSystem = UseMetricSystem;
-            storage.useTwelveHoursSystem = UseTwelveHoursSystem;
-            storage.enableAnimations = EnableAnimations;
-
-            string json = JsonConvert.SerializeObject(storage);
-            File.WriteAllText(path, json);
+            PlayerPrefs.SetString(Constants.USE_CELSIUS_KEY, UseCelsius.ToString());
+            PlayerPrefs.SetString(Constants.USE_METRIC_SYSTEM_KEY, UseMetricSystem.ToString());
+            PlayerPrefs.SetString(Constants.USE_TWELVE_HOURS_KEY, UseTwelveHoursSystem.ToString());
+            PlayerPrefs.SetString(Constants.ENABLE_ANIMATIONS_KEY, EnableAnimations.ToString());
         }
     }
 }

@@ -28,5 +28,10 @@
         public const int LOADED_IMAGE_SIZE = 64;
 
         public const float ANIMATIONS_DURATION = 1;
+
+        public const string USE_CELSIUS_KEY = "UseCelsius";
+        public const string USE_METRIC_SYSTEM_KEY = "UseMetricSystem";
+        public const string USE_TWELVE_HOURS_KEY = "UseTwelveHoursSystem";
+        public const string ENABLE_ANIMATIONS_KEY = "EnableAnimations";
     }
 }
