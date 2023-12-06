@@ -23,6 +23,7 @@ namespace MistProject.UI.Screen
             }
             else
             {
+                if (!isActiveAndEnabled) return;
                 StartCoroutine(DisableScreen(duration));
             }
         }
