@@ -17,8 +17,11 @@ namespace MistProject.UI.Forecast
             _conditions.text = day.day.condition.text;
             _date.text = day.date.ToAppDate();
 
-            _maxTemperature.text = useCelsius ? ((int) day.day.maxtemp_c).ToString() : ((int) day.day.maxtemp_f).ToString();
-            _minTemperature.text = useCelsius ? ((int) day.day.mintemp_c).ToString() : ((int) day.day.mintemp_f).ToString();
+            var maxTemperature = useCelsius ? ((int) day.day.maxtemp_c) : ((int) day.day.maxtemp_f);
+            var minTemperature = useCelsius ? ((int) day.day.mintemp_c) : ((int) day.day.mintemp_f);
+
+            _maxTemperature.text = maxTemperature > 0 ? $"+{maxTemperature}" : maxTemperature.ToString();
+            _minTemperature.text = minTemperature > 0 ? $"+{minTemperature}" : minTemperature.ToString();
         }
     }
 }

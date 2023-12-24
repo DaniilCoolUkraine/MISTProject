@@ -1,4 +1,5 @@
-﻿using MistProject.Config;
+﻿using System.Linq;
+using MistProject.Config;
 using MistProject.General;
 using MistProject.UI.JsonData;
 using MistProject.Utils.Context;
@@ -39,7 +40,7 @@ namespace MistProject.UI.Forecast
 
             ForecastElementController temp;
 
-            foreach (Forecastday forecast in currentForecastData.forecast.forecastday)
+            foreach (Forecastday forecast in currentForecastData.forecast.forecastday.Skip(1))
             {
                 temp = Instantiate(_forecastPrefab, _elementsParent);
                 temp.Initialize(forecast, _globalSettings.UseCelsius);

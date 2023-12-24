@@ -35,7 +35,8 @@ namespace MistProject.General
             DateTime result = DateTime.ParseExact(date, "yyyy-MM-dd", CultureInfo.InvariantCulture);
             var sb = new StringBuilder();
 
-            return sb.Append(result.DayOfWeek).Append(", ").Append(result.Day).Append(" ").Append(result.Month).ToString();
+            return sb.Append(result.DayOfWeek).Append(", ").Append(result.Day).Append(" ")
+                .Append(CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(result.Month)).ToString();
         }
 
         public static void KillAllChildren<T>(this Transform parent) where T: Component
